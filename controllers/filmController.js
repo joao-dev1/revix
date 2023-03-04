@@ -1,25 +1,25 @@
-const User = require('../models/user');
+const Film = require('../models/film');
 
 exports.getAll = async (req, res) => {
   //models                   
-  User.getAll((err, users) => {
+  Film.getAll((err, films) => {
       if (err) {
         res.status(500).send({
           message:
             err.message || "Ocorreu um erro ao buscar o usuários."
         });
       } else {
-        res.send(users);
+        res.send(films);
       }
     });
 };
 exports.getById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).send('User not found');
+    const film = await Film.findById(req.params.id);
+    if (!film) {
+      return res.status(404).send('Film not found');
     }
-    res.json(user);
+    res.json(film);
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -27,32 +27,31 @@ exports.getById = async (req, res) => {
 
 exports.create = async (req, res) => {
   
-    const newUser = new User({
+    const newFilm = new Film({
         name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
+       
       });
-
+      
       //models                   
-    User.create(newUser, (err, user) => {
+    Film.create(newFilm, (err, film) => {
         if (err) {
           res.status(500).send({
             message:
               err.message || "Ocorreu um erro ao criar o usuário."
           });
         } else {
-          res.send(user);
+          res.send(film);
         }
       });
 };
 
 exports.updateById = async (req, res) => {
   try {
-    const user = await User.updateById(req.params.id, req.body, { new: true });
-    if (!user) {
-      return res.status(404).send('User not found');
+    const Film = await Film.updateById(req.params.id, req.body, { new: true });
+    if (!Film) {
+      return res.status(404).send('Film not found');
     }
-    res.json(user);
+    res.json(Film);
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -60,11 +59,11 @@ exports.updateById = async (req, res) => {
 
 exports.deleteById = async (req, res) => {
   try {
-    const user = await User.remove(req.params.id);
-    if (!user) {
-      return res.status(404).send('User not found');
+    const Film = await Film.remove(req.params.id);
+    if (!Film) {
+      return res.status(404).send('Film not found');
     }
-    res.json({ message: 'User deleted successfully' });
+    res.json({ message: 'Film deleted successfully' });
   } catch (err) {
     res.status(500).send(err.message);
   }

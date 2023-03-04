@@ -1,15 +1,15 @@
 const db = require('./db');
 
 const User = function(user) {
-  this.username = user.username;
+  this.name = user.name;
   this.email = user.email;
   this.password = user.password;
 };
 
 User.create = (newUser, result) => {
-  console.log(newUser.username);
-  db.run("INSERT INTO users (nickname, email, password) VALUES (?, ?, ?)", 
-    [newUser.username, newUser.email, newUser.password], 
+  console.log(newUser.name);
+  db.run("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", 
+    [newUser.name, newUser.email, newUser.password], 
     (err) => {
       if (err) {
         console.error(err.message);
@@ -45,8 +45,8 @@ User.getAll = (result) => {
 };
 
 User.updateById = (userId, user, result) => {
-  db.run("UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?", 
-    [user.username, user.email, user.password, userId], 
+  db.run("UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?", 
+    [user.name, user.email, user.password, userId], 
     (err) => {
       if (err) {
         console.error(err.message);

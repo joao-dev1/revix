@@ -9,15 +9,41 @@ const db = new sqlite3.Database(DBSOURCE, (err) => {
     throw err;
   } else {
     console.log('Connected to the SQLite database.');
+    db.run(`CREATE TABLE films(
+      idFilm INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT UNIQUE)`,
+    (err) => {
+      if (err) {
+        // Table already created
+        console.log('films Table already created');
+      }
+    });
     db.run(`CREATE TABLE users(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT, 
+        name TEXT, 
         email TEXT UNIQUE, 
         password TEXT)`,
       (err) => {
         if (err) {
           // Table already created
-          console.log('Table already created');
+          console.log('Users Table already created');
+        }
+      });
+     
+      db.run(`CREATE TABLE reviews(
+        idReview INTEGER PRIMARY KEY AUTOINCREMENT,
+        idUsuario INTEGER,
+        idFilme INTEGER, 
+        nota INTEGER,
+        descricao TEXT,
+        dataPublicada DATE,
+        FOREIGN KEY(idUsuario) REFERENCES users(id),
+        FOREIGN KEY(idFilme) REFERENCES films(idFilm))`,
+        
+      (err) => {
+        if (err) {
+          // Table already created
+          console.log('reviews Table already created');
         }
       });
   }
