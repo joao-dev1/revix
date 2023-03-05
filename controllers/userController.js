@@ -47,15 +47,18 @@ exports.create = async (req, res) => {
 };
 
 exports.updateById = async (req, res) => {
-  try {
-    const user = await User.updateById(req.params.id, req.body, { new: true });
-    if (!user) {
-      return res.status(404).send('User not found');
+
+  User.updateById(req.params.id,req.body, (err, user) => {
+    if (err) {
+      res.status(500).send({
+        message:
+          err.message || "Ocorreu um erro ao atualizar o usuário."
+      });
+    } else {
+      res.send(user);
     }
-    res.json(user);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
+  });
+ 
 };
 
 exports.deleteById = async (req, res) => {

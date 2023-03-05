@@ -36,7 +36,7 @@ Review.findById = (ReviewId, result) => {
 };
 
 Review.getAll = (result) => {
-  db.all("SELECT *FROM reviews", (err, rows) => {
+  db.all("SELECT *FROM reviews WHERE idFilme IS NOT NULL", (err, rows) => {
     if (err) {
       console.error(err.message);
       result(err, null);

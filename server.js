@@ -6,7 +6,8 @@ const filmRoutes = require('./routes/filmRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const app = express();
 
-
+const cors = require('cors');
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/auth', authRouter);
@@ -14,6 +15,6 @@ app.use('/', userRoutes);
 app.use('/', filmRoutes);
 app.use('/', reviewRoutes);
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log('API rodando na porta 3000.');
 });
